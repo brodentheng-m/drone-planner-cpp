@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Planner</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <h1>Drone Planner</h1>
+    </div>
+    <div class="status-pill" id="statusPill">Idle</div>
+  </header>
+
+  <main class="workspace">
+    <aside class="panel commands-panel">
+      <div class="panel-head">
+        <h2>Command Palette</h2>
+      </div>
+      <div class="command-groups" id="commandGroups"></div>
+    </aside>
+
+    <section class="viewport" id="viewport">
+      <canvas id="sceneCanvas"></canvas>
+      <div class="camera-toggle">
+        <button class="cam-btn active" id="camMap" title="Map camera">Map</button>
+        <button class="cam-btn" id="camFollow" title="Follow drone">Follow</button>
+      </div>
+      <div class="playback-bar">
+        <button class="primary-btn" id="runBtn">Run Plan</button>
+        <button class="ghost-btn" id="stopBtn">Stop</button>
+      </div>
+    </section>
+
+    <aside class="panel side-panel">
+      <div class="panel-section">
+        <div class="panel-head">
+          <h2>Flight Plan</h2>
+          <button class="text-btn" id="clearPlan">Clear</button>
+        </div>
+        <ul class="plan-list" id="planList"></ul>
+      </div>
+
+      <div class="panel-section telemetry">
+        <div class="panel-head">
+          <h2>Telemetry</h2>
+        </div>
+        <div class="telemetry-grid">
+          <div class="tel-item"><span class="tel-label">Altitude</span><span class="tel-value" id="telAlt">0.0 m</span></div>
+          <div class="tel-item"><span class="tel-label">Speed</span><span class="tel-value" id="telSpeed">0.0 m/s</span></div>
+          <div class="tel-item"><span class="tel-label">Battery</span><span class="tel-value" id="telBattery">100 %</span></div>
+          <div class="tel-item"><span class="tel-label">Heading</span><span class="tel-value" id="telHeading">0 deg</span></div>
+        </div>
+        <canvas id="speedChart" width="300" height="120"></canvas>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-head">
+          <h2>Obstacles</h2>
+        </div>
+        <div class="obstacle-form" id="obstacleForm">
+          <label>X<input type="number" id="obX" value="0" step="10"></label>
+          <label>Y<input type="number" id="obY" value="0" step="10"></label>
+          <label>Z<input type="number" id="obZ" value="30" step="10"></label>
+          <label>W<input type="number" id="obSx" value="20" step="5"></label>
+          <label>H<input type="number" id="obSy" value="20" step="5"></label>
+          <label>D<input type="number" id="obSz" value="20" step="5"></label>
+          <button class="secondary-btn" id="addObstacle">Add Box</button>
+          <label class="file-label"><input type="file" id="obstacleFile" accept=".json">Import JSON</label>
+        </div>
+        <ul class="obstacle-list" id="obstacleList"></ul>
+      </div>
+
+      <div class="panel-section code-section">
+        <div class="panel-head">
+          <h2>Generated Code</h2>
+          <button class="text-btn" id="copyCode">Copy</button>
+        </div>
+        <pre class="code-block" id="codeBlock"><code>Run a plan to generate Python code</code></pre>
+      </div>
+    </aside>
+  </main>
+
+  <script src="engine.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
